@@ -15,9 +15,9 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: 'Amigo Secreto Fraudes — Amigo secreto sem complicação',
+  title: 'Amigo Secreto de Prevenção a Fraudes — Sem complicação',
   description:
-    'Crie um grupo, convidle as pessoas e faça o sorteio do amigo secreto em minutos. Cada pessoa recebe seu resultado em um link privado.',
+    'Crie um grupo, convide as pessoas e faça o sorteio do amigo secreto em minutos. Cada pessoa recebe seu resultado em um link privado.',
 };
 
 export default function RootLayout({
