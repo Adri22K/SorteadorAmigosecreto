@@ -1,22 +1,19 @@
 import type { Participant } from './types';
 
 /**
- * Sorteia um ciclo único: cada pessoa tira outra, ninguém tira a si mesmo
- * e todos são sorteados exatamente uma vez.
+ * Sorteia um ciclo único: as pessoas são embaralhadas numa "roda" e cada uma
+ * tira a seguinte. Assim ninguém tira a si mesmo e nenhuma dupla se tira
+ * em par (não existem ciclos de 2 pessoas).
  */
 export function shuffleAssignments(
   participants: Participant[],
 ): { giver_id: string; receiver_id: string }[] {
-  const ids = participants.map((p) => p.id);
+  const wheel = FisherYatesShuffle(participants.map((p) => p.id));
 
-  let result: string[];
-  for (;;) {
-    result = FisherYatesShuffle(ids);
-    const valid = result.every((receiver, i) => receiver !== ids[i]);
-    if (valid) break;
-  }
-
-  return ids.map((giver_id, i) => ({ giver_id, receiver_id: result[i] }));
+  return wheel.map((giver_id, i) => ({
+    giver_id,
+    receiver_id: wheel[(i + 1) % wheel.length],
+  }));
 }
 
 function FisherYatesShuffle(arr: string[]): string[] {
