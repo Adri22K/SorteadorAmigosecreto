@@ -24,15 +24,34 @@ export default function ShareLinks({
     }
   }
 
-  function whatsappLink(name: string, url: string) {
-    const message = `Olá, ${name}! O sorteio do grupo "${group.name}" está pronto. Abra seu resultado aqui: ${url}`;
-    return `https://wa.me/?text=${encodeURIComponent(message)}`;
+  function resultUrl(p: Participant) {
+    return `${origin}/eu/${p.id}`;
+  }
+
+  function whatsappUrl(p: Participant) {
+    if (p.phone) {
+      const phone = p.phone.startsWith('55') ? p.phone : `55${p.phone}`;
+      return `https://wa.me/${phone}?text=${encodeURIComponent(whatsappMessage(p))}`;
+    }
+    return `https://wa.me/?text=${encodeURIComponent(whatsappMessage(p))}`;
+  }
+
+  function whatsappMessage(p: Participant) {
+    return `Olá, ${p.name}! O sorteio do grupo "${group.name}" está pronto. Abra seu resultado aqui: ${resultUrl(p)}`;
+  }
+
+  function mailtoUrl(p: Participant) {
+    return `mailto:${p.email}?subject=${encodeURIComponent(
+      `Seu amigo secreto — ${group.name}`,
+    )}&body=${encodeURIComponent(
+      `Olá, ${p.name}!\n\nO sorteio do grupo "${group.name}" está pronto.\nAbra seu resultado aqui: ${resultUrl(p)}\n\nGuarde este link só para você.`,
+    )}`;
   }
 
   return (
     <div className="mt-6 space-y-3">
       {participants.map((p) => {
-        const url = `${origin}/eu/${p.id}`;
+        const url = resultUrl(p);
         return (
           <div
             key={p.id}
@@ -42,9 +61,19 @@ export default function ShareLinks({
               <p className="truncate font-display text-sm font-semibold text-body">
                 {p.name}
               </p>
-              <p className="truncate text-xs text-muted">{url}</p>
+              <p className="truncate text-xs text-muted">
+                {(p.phone || p.email) ? (
+                  <>
+                    {p.phone && <span>{p.phone}</span>}
+                    {p.phone && p.email && <span> · </span>}
+                    {p.email && <span>{p.email}</span>}
+                  </>
+                ) : (
+                  url
+                )}
+              </p>
             </div>
-            <div className="flex shrink-0 items-center gap-2">
+            <div className="flex shrink-0 flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => copy(url, p.id)}
@@ -53,13 +82,21 @@ export default function ShareLinks({
                 {copied === p.id ? 'Copiado!' : 'Copiar link'}
               </button>
               <a
-                href={whatsappLink(p.name, url)}
+                href={whatsappUrl(p)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-pill bg-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-primary-hover"
               >
-                WhatsApp
+                {p.phone ? 'Zap' : 'Zap (copiar msg)'}
               </a>
+              {p.email && (
+                <a
+                  href={mailtoUrl(p)}
+                  className="rounded-pill bg-accent px-4 py-2 text-xs font-semibold text-white transition hover:brightness-95"
+                >
+                  E-mail
+                </a>
+              )}
             </div>
           </div>
         );
@@ -69,7 +106,7 @@ export default function ShareLinks({
         onClick={() =>
           copy(
             participants
-              .map((p) => `${p.name}: ${origin}/eu/${p.id}`)
+              .map((p) => `${p.name}: ${resultUrl(p)}`)
               .join('\n'),
             '__all',
           )

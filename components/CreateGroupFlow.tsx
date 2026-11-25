@@ -12,14 +12,22 @@ import ShareLinks from './ShareLinks';
 
 const steps = ['Grupo', 'Participantes', 'Sorteio'];
 
+function parseContact(contact: string): { phone: string | null; email: string | null } {
+  const value = contact.trim();
+  if (!value) return { phone: null, email: null };
+  if (value.includes('@')) return { phone: null, email: value.toLowerCase() };
+  const digits = value.replace(/\D/g, '');
+  return { phone: digits || null, email: null };
+}
+
 export default function CreateGroupFlow() {
   const router = useRouter();
   const [step, setStep] = useState(0);
   const [groupName, setGroupName] = useState('');
   const [budgetHint, setBudgetHint] = useState('');
   const [participants, setParticipants] = useState<
-    { name: string; wishlist: string }[]
-  >([{ name: '', wishlist: '' }]);
+    { name: string; wishlist: string; contact: string }[]
+  >([{ name: '', wishlist: '', contact: '' }]);
   const [group, setGroup] = useState<Group | null>(null);
   const [savedParticipants, setSavedParticipants] = useState<Participant[]>([]);
   const [error, setError] = useState('');
@@ -31,7 +39,11 @@ export default function CreateGroupFlow() {
     [participants],
   );
 
-  function updateParticipant(i: number, field: 'name' | 'wishlist', value: string) {
+  function updateParticipant(
+    i: number,
+    field: 'name' | 'wishlist' | 'contact',
+    value: string,
+  ) {
     setParticipants((prev) =>
       prev.map((p, idx) => (idx === i ? { ...p, [field]: value } : p)),
     );
@@ -74,6 +86,7 @@ export default function CreateGroupFlow() {
         group_id: groupData.id,
         name: p.name.trim(),
         wishlist: p.wishlist.trim() || null,
+        ...parseContact(p.contact),
       }));
       const { data: participantsData, error: participantsError } = await supabase
         .from('participants')
@@ -181,18 +194,26 @@ export default function CreateGroupFlow() {
               Quem participa?
             </h1>
             <p className="mt-1 text-sm text-muted">
-              Adicione nome e, se quiser, uma dica de presente para cada pessoa.
+              Adicione nome e, se quiser, um contato e uma dica de presente para
+              cada pessoa. Com o contato, você envia o resultado direto pro
+              WhatsApp ou e-mail dela.
             </p>
             <div className="mt-6 space-y-4">
               {participants.map((p, i) => (
                 <div
                   key={i}
-                  className="grid gap-3 rounded-card border border-line bg-background p-4 sm:grid-cols-[1fr_1fr_auto] sm:items-center"
+                  className="grid gap-3 rounded-card border border-line bg-background p-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-center"
                 >
                   <input
                     value={p.name}
                     onChange={(e) => updateParticipant(i, 'name', e.target.value)}
                     placeholder={`Nome da pessoa ${i + 1}`}
+                    className="w-full rounded-card border border-line bg-surface px-4 py-2.5 text-sm outline-none transition focus:border-primary"
+                  />
+                  <input
+                    value={p.contact}
+                    onChange={(e) => updateParticipant(i, 'contact', e.target.value)}
+                    placeholder="Zap ou e-mail (opcional)"
                     className="w-full rounded-card border border-line bg-surface px-4 py-2.5 text-sm outline-none transition focus:border-primary"
                   />
                   <input
@@ -218,7 +239,12 @@ export default function CreateGroupFlow() {
             <div className="mt-5">
               <Button
                 variant="soft"
-                onClick={() => setParticipants((prev) => [...prev, { name: '', wishlist: '' }])}
+                onClick={() =>
+                  setParticipants((prev) => [
+                    ...prev,
+                    { name: '', wishlist: '', contact: '' },
+                  ])
+                }
               >
                 Adicionar pessoa
               </Button>

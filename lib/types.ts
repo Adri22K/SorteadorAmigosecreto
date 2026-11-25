@@ -10,6 +10,8 @@ export interface Participant {
   group_id: string;
   name: string;
   wishlist: string | null;
+  phone: string | null;
+  email: string | null;
   created_at: string;
 }
 
