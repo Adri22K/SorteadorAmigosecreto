@@ -15,7 +15,13 @@ const config: Config = {
           hover: 'var(--color-primary-hover)',
           soft: 'var(--color-primary-soft)',
         },
-        accent: 'var(--color-accent)',
+        accent: {
+          DEFAULT: 'var(--color-accent)',
+          dark: 'var(--color-accent-dark)',
+          deep: 'var(--color-accent-deep)',
+          soft: 'var(--color-accent-soft)',
+          tint: 'var(--color-accent-tint)',
+        },
         surface: 'var(--color-surface)',
         body: 'var(--color-text)',
         muted: 'var(--color-text-secondary)',
@@ -35,6 +41,8 @@ const config: Config = {
       boxShadow: {
         soft: '0 2px 12px rgba(23, 70, 56, 0.06)',
         lift: '0 8px 24px rgba(23, 70, 56, 0.1)',
+        accentSoft: '0 2px 12px rgba(201, 91, 77, 0.14)',
+        accentLift: '0 8px 24px rgba(168, 62, 49, 0.22)',
       },
       spacing: {
         18: '4.5rem',

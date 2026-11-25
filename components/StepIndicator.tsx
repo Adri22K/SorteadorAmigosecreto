@@ -17,18 +17,18 @@ export default function StepIndicator({ steps, current }: StepIndicatorProps) {
             <span
               className={`flex items-center gap-1.5 rounded-pill px-3 py-1 font-semibold transition ${
                 isCurrent
-                  ? 'bg-primary text-white'
+                  ? 'bg-accent text-white shadow-accentSoft'
                   : isDone
-                  ? 'bg-primary-soft text-primary'
+                  ? 'bg-accent-soft text-accent-deep'
                   : 'bg-surface text-muted border border-line'
               }`}
             >
               <span
                 className={`flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${
                   isCurrent
-                    ? 'bg-white/20 text-white'
+                    ? 'bg-white/25 text-white'
                     : isDone
-                    ? 'bg-primary text-white'
+                    ? 'bg-accent text-white'
                     : 'bg-line text-muted'
                 }`}
               >

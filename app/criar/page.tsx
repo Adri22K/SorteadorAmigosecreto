@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import CreateGroupFlow from '@/components/CreateGroupFlow';
 
 export const metadata = {
-  title: 'Criar grupo — Meu Amigo Fraudes',
+  title: 'Criar grupo — Amigo Secreto Fraudes',
 };
 
 export default function CriarPage() {

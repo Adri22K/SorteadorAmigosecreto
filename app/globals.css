@@ -9,6 +9,10 @@
   --color-primary-hover: #11352a;
   --color-primary-soft: #E8EFE7;
   --color-accent: #C95B4D;
+  --color-accent-dark: #A83E31;
+  --color-accent-deep: #7C2A20;
+  --color-accent-soft: #F6E3DF;
+  --color-accent-tint: #FBEFEC;
   --color-surface: #ffffff;
   --color-text: #1f2a25;
   --color-text-secondary: #5c6661;
@@ -17,7 +21,7 @@
   /* Neutros de apoio */
   --color-success: #2e7d5b;
   --color-warning: #b97f24;
-  --color-error: #b3402f;
+  --color-error: #A83E31;
 }
 
 html {

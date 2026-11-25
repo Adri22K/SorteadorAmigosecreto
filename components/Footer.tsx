@@ -8,8 +8,8 @@ export default function Footer() {
           <p className="text-sm text-muted">
             Um jeito simples de aproximar pessoas, mesmo à distância.
           </p>
-          <p className="text-sm font-semibold text-primary">
-            Meu Amigo Fraudes
+          <p className="text-sm font-semibold text-accent">
+            Amigo Secreto Fraudes
           </p>
         </div>
       </div>

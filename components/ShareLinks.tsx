@@ -85,14 +85,14 @@ export default function ShareLinks({
                 href={whatsappUrl(p)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-pill bg-primary px-4 py-2 text-xs font-semibold text-white transition hover:bg-primary-hover"
+                className="rounded-pill bg-accent px-4 py-2 text-xs font-semibold text-white transition hover:bg-accent-dark"
               >
                 {p.phone ? 'Zap' : 'Zap (copiar msg)'}
               </a>
               {p.email && (
                 <a
                   href={mailtoUrl(p)}
-                  className="rounded-pill bg-accent px-4 py-2 text-xs font-semibold text-white transition hover:brightness-95"
+                  className="rounded-pill bg-accent-dark px-4 py-2 text-xs font-semibold text-white transition hover:bg-accent-deep"
                 >
                   E-mail
                 </a>

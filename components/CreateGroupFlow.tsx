@@ -116,7 +116,7 @@ export default function CreateGroupFlow() {
       <section className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
         <StepIndicator steps={steps} current={3} />
         <Card className="mt-6">
-          <div className="rounded-card bg-primary-soft px-4 py-3 text-sm font-semibold text-primary">
+          <div className="rounded-card bg-accent-tint px-4 py-3 text-sm font-semibold text-accent-deep">
             Sorteio concluído! Agora envie a cada pessoa o seu link individual.
           </div>
           <h1 className="mt-6 font-display text-2xl font-bold text-primary">

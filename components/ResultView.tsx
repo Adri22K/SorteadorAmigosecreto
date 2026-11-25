@@ -108,9 +108,9 @@ export default function ResultView({ participantId }: { participantId: string })
           Guardem segredo — este link mostra apenas o seu resultado.
         </p>
 
-        <div className="mt-8 rounded-card border border-line bg-primary-soft/60 p-6 text-center">
-          <p className="text-sm font-semibold text-muted">Você tirou</p>
-          <p className="mt-2 font-display text-3xl font-bold text-primary">
+        <div className="mt-8 rounded-card border border-accent-soft bg-accent-tint p-6 text-center">
+          <p className="text-sm font-semibold text-accent-deep">Você tirou</p>
+          <p className="mt-2 font-display text-3xl font-bold text-accent-dark">
             {receiver.name}
           </p>
           {group?.budget_hint && (
