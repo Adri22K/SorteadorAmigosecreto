@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Amigo Secreto Fraudes
 
-## Getting Started
+Aplicação Next.js + Supabase para criar grupos de amigo secreto, cadastrar participantes, respeitar restrições de casais e entregar resultados por links individuais.
 
-First, run the development server:
+## Requisitos
+- Node.js 18+
+- Projeto Supabase
+- Variáveis de ambiente configuradas (veja `.env.example`)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun run dev
-```
+## Configuração local
+1. Instale as dependências: `npm install`.
+2. Copie `.env.example` para `.env.local`.
+3. Preencha `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY` com os valores do projeto Supabase.
+4. Preencha `SUPABASE_SERVICE_ROLE_KEY` com a chave secreta do Supabase. **Nunca use o prefixo `NEXT_PUBLIC_` nessa chave e nunca a envie ao GitHub.**
+5. Execute no SQL Editor do Supabase, nesta ordem, os arquivos em `supabase/migrations/` que ainda não foram executados. Para uma instalação já existente, execute especialmente `20261125160000_secure_private_draw.sql`.
+6. Rode `npm run dev` e acesse `http://localhost:3000`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Regras do sorteio
+- Entre 3 e 20 participantes.
+- Ninguém tira a si próprio.
+- Cada pessoa é sorteada exatamente uma vez.
+- Casais são cadastrados vinculando um ao outro no campo “Não pode tirar”; a restrição é recíproca.
+- O sorteio usa aleatoriedade criptográfica e procura uma combinação válida. Se as restrições tornarem o sorteio impossível, informa o problema em vez de gerar resultado inválido.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Segurança
+- A chave `service_role` é usada somente nas rotas de servidor.
+- Os links individuais usam tokens aleatórios de 256 bits; somente o hash SHA-256 é armazenado no banco.
+- O navegador não consulta diretamente a tabela `assignments`.
+- A migration de segurança remove permissões públicas e políticas abertas.
+- Nesta versão, o organizador recebe a lista de links para compartilhamento manual e, portanto, tecnicamente pode abrir os resultados. Para impedir isso, é necessário enviar os links diretamente aos participantes por um provedor de e-mail/WhatsApp sem exibi-los ao organizador.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Compartilhamento
+Os botões de WhatsApp abrem uma mensagem pronta. O botão de e-mail abre um rascunho no aplicativo de e-mail; nenhum e-mail é enviado automaticamente.

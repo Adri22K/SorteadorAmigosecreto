@@ -1,5 +1,3 @@
-import Header from './Header';
-
 export default function Footer() {
   return (
     <footer className="mt-auto border-t border-line bg-primary-soft/50">

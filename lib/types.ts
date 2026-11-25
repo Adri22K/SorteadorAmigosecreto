@@ -13,6 +13,7 @@ export interface Participant {
   phone: string | null;
   email: string | null;
   created_at: string;
+  resultUrl?: string;
 }
 
 export interface Assignment {

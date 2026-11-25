@@ -25,7 +25,7 @@ export default function ShareLinks({
   }
 
   function resultUrl(p: Participant) {
-    return `${origin}/eu/${p.id}`;
+    return p.resultUrl || `${origin}/eu/`;
   }
 
   function whatsappUrl(p: Participant) {
@@ -113,7 +113,7 @@ export default function ShareLinks({
         }
         className="mt-2 text-sm font-semibold text-primary underline-offset-2 transition hover:underline"
       >
-        {copied === '__all' ? 'Todos os links copiados!' : 'Copiar todos os links'}
+        {copied === '__all' ? 'Todos os links copiados!' : 'Copiar todos os links (organizador terá acesso a todos)'}
       </button>
     </div>
   );

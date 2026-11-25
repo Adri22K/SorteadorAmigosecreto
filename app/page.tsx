@@ -13,7 +13,7 @@ const steps = [
   {
     title: 'Faça o sorteio',
     description:
-      'O sorteio garante que ninguém tire a si mesmo e que todos sejam sorteados exatamente uma vez.',
+      'O sorteio respeita as restrições de casal, impede que alguém tire a si mesmo e garante um resultado para cada pessoa.',
   },
   {
     title: 'Compartilhe o resultado',
