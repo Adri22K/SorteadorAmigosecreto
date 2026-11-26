@@ -31,3 +31,10 @@ Aplicação Next.js + Supabase para criar grupos de amigo secreto, cadastrar par
 
 ## Compartilhamento
 Os botões de WhatsApp abrem uma mensagem pronta. O botão de e-mail abre um rascunho no aplicativo de e-mail; nenhum e-mail é enviado automaticamente.
+
+
+## Importar e reutilizar participantes
+
+Na etapa **Quem participa?**, é possível importar um arquivo CSV com as colunas `Nome`, `Telefone`, `E-mail` e `Casal`. O importador aceita separador ponto e vírgula ou vírgula, preserva telefones como texto e valida nomes duplicados, e-mails e vínculos de casal. Para bloquear o sorteio entre duas pessoas, informe o nome do parceiro na coluna `Casal` nos dois registros (por exemplo, Anna → Geison e Geison → Anna).
+
+Também é possível salvar a lista como **lista-base** e reutilizá-la no mesmo navegador. Essa lista fica no armazenamento local do navegador daquele dispositivo; não é enviada ao Supabase nem sincronizada entre dispositivos. Como contém dados pessoais, use essa opção apenas em um dispositivo confiável e apague os dados do navegador se deixar de utilizá-lo.
